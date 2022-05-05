@@ -4,6 +4,7 @@
 #include "classes/gameobject/GameObject.h"
 #include <Engine/InputEvents.hpp>
 #include <Engine/Sprite.hpp>
+#include <random>
 #include <vector>
 
 class Player : public GameObject

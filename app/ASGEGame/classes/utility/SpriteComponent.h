@@ -21,20 +21,21 @@ class SpriteComponent
   void setY(float y);
   float getX();
   float getY();
+  float getScale();
   float getTrueWidth();
   float getTrueHeight();
   void setBounds(float x, float y);
   void setDimensions(float w, float h, float s);
   [[maybe_unused]] void setAnimationCells(const ASGE::GameTime& us);
 
-  [[nodiscard]] BoundingBox getBoundingBox(float scale, bool topdown) const;
+  [[nodiscard]] BoundingBox getBoundingBox(float scale) const;
   [[nodiscard]] const std::unique_ptr<ASGE::Sprite>& getSprite() const;
 
  private:
   std::unique_ptr<ASGE::Sprite> sprite = nullptr;
-  float width                          = 16;
-  float height                         = 16;
-  float scale                          = 3;
+  float sprite_width                   = 16;
+  float sprite_height                  = 16;
+  float sprite_scale                   = 3;
   float src_x                          = 0;
   float src_y                          = 0;
   float animation_timer{};

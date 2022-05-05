@@ -30,7 +30,7 @@ bool GameObject::clickCollision(ASGE::SharedEventData data)
   {
     return static_cast<bool>(
       sprite()
-        ->getBoundingBox(sprite()->getSprite()->scale(), false)
+        ->getBoundingBox(sprite()->getSprite()->scale())
         .collision(static_cast<float>(click->xpos), static_cast<float>(click->ypos), 0, 0));
   }
 

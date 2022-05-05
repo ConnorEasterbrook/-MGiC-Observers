@@ -18,12 +18,30 @@ set(GAME_SOURCES
         ASGEGame.cpp
         classes/gameobject/Buttons.cpp
         classes/gameobject/GameObject.cpp
+        classes/gameobject/QuantomObject.cpp
+        classes/gameobject/QuantomObject.h
+        classes/gameobject/objects/Projectile.cpp
+        classes/gameobject/objects/Projectile.hpp
         classes/gameobject/player/Player.cpp
         classes/utility/BoundingBox.cpp
+        classes/utility/Tiles.cpp
         classes/utility/SpriteComponent.cpp
+        classes/utility/Vector2.cpp 
+        classes/utility/Interpolation.cpp
+        classes/utility/Interpolation.h
         classes/utility/Vector2.cpp
+        classes/States/MainGameState.cpp
+        classes/States/MainGameState.h
+        classes/States/State.cpp
+        classes/States/State.h
+        classes/States/TitleState.cpp
+        classes/States/TitleState.h
+        classes/States/HospitalState.cpp
+        classes/States/HospitalState.h
+        classes/States/InterrogationState.cpp
+        classes/States/InterrogationState.h
         classes/gameplay/Interrogation.cpp
-        classes/utility/Tiles.cpp)
+        classes/gameplay/InterrogationQuestion.cpp classes/States/PauseState.cpp classes/States/PauseState.h classes/States/GameWon.cpp classes/States/GameWon.h classes/States/GameOver.cpp classes/States/GameOver.h)
 
 ## the ASGE Game, which spawns the Game window ##
 add_executable(${GAME} ${HEADER_LIST} ${GAME_SOURCES})

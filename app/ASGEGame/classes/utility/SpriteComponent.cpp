@@ -41,14 +41,19 @@ float SpriteComponent::getY()
   return sprite->yPos();
 }
 
+float SpriteComponent::getScale()
+{
+  return sprite_scale;
+}
+
 float SpriteComponent::getTrueWidth()
 {
-  return height * scale;
+  return sprite_height * sprite_scale;
 }
 
 float SpriteComponent::getTrueHeight()
 {
-  return width * scale;
+  return sprite_width * sprite_scale;
 }
 
 void SpriteComponent::setBounds(float posX, float posY)
@@ -58,15 +63,15 @@ void SpriteComponent::setBounds(float posX, float posY)
 
   getSprite()->srcRect()[0] = posX;
   getSprite()->srcRect()[1] = posY;
-  getSprite()->srcRect()[2] = width;
-  getSprite()->srcRect()[3] = height;
+  getSprite()->srcRect()[2] = sprite_width;
+  getSprite()->srcRect()[3] = sprite_height;
 }
 
 void SpriteComponent::setDimensions(float w, float h, float s)
 {
-  width  = w;
-  height = h;
-  scale  = s;
+  sprite_width  = w;
+  sprite_height = h;
+  sprite_scale  = s;
 
   getSprite()->width(w);
   getSprite()->height(h);
@@ -75,23 +80,13 @@ void SpriteComponent::setDimensions(float w, float h, float s)
   getSprite()->setMagFilter(ASGE::Texture2D::MagFilter::NEAREST);
 }
 
-BoundingBox SpriteComponent::getBoundingBox(float sprite_scale, bool topdown) const
+BoundingBox SpriteComponent::getBoundingBox(float scale) const
 {
   BoundingBox bounding_box;
-  if (!topdown)
-  {
-    bounding_box.xPos   = sprite->xPos();
-    bounding_box.yPos   = sprite->yPos();
-    bounding_box.width  = sprite->width() * sprite_scale;
-    bounding_box.height = sprite->height() * sprite_scale;
-  }
-  else
-  {
-    bounding_box.xPos   = sprite->xPos();
-    bounding_box.yPos   = sprite->yPos() + (sprite->height() * sprite_scale);
-    bounding_box.width  = sprite->width() * sprite_scale;
-    bounding_box.height = sprite->height() - (sprite->height() / sprite_scale);
-  }
+  bounding_box.xPos   = sprite->xPos();
+  bounding_box.yPos   = sprite->yPos();
+  bounding_box.width  = sprite->width() * scale;
+  bounding_box.height = sprite->height() * scale;
 
   return bounding_box;
 }
@@ -105,9 +100,13 @@ const std::unique_ptr<ASGE::Sprite>& SpriteComponent::getSprite() const
 {
   std::array<std::array<float, 4>, 4> animation_cells{};
   animation_cells[0] = { src_x, src_y, getSprite()->width(), getSprite()->height() };
-  animation_cells[1] = { src_x + width, src_y, getSprite()->width(), getSprite()->height() };
-  animation_cells[2] = { src_x + (width * 2), src_y, getSprite()->width(), getSprite()->height() };
-  animation_cells[3] = { src_x + (width * 3), src_y, getSprite()->width(), getSprite()->height() };
+  animation_cells[1] = { src_x + sprite_width, src_y, getSprite()->width(), getSprite()->height() };
+  animation_cells[2] = {
+    src_x + (sprite_width * 2), src_y, getSprite()->width(), getSprite()->height()
+  };
+  animation_cells[3] = {
+    src_x + (sprite_width * 3), src_y, getSprite()->width(), getSprite()->height()
+  };
 
   constexpr float ANIMATION_FRAME_RATE = 1.F / 10.F;
 

@@ -14,6 +14,16 @@ bool Buttons::getIsActive() const
   return is_active;
 }
 
+void Buttons::setState(int state)
+{
+  current_state = state;
+}
+
+int Buttons::getState() const
+{
+  return current_state;
+}
+
 void Buttons::setSpriteSheetWidth(float x)
 {
   sprite_sheet_width = x;
@@ -48,13 +58,28 @@ void Buttons::goRender(ASGE::Renderer* renderer, float z_order) const
 {
   if (sprite_component)
   {
-    if (is_active)
+    //    if (is_active)
+    //    {
+    //      sprite()->setBounds(active_x_bound, active_y_bound);
+    //    }
+    //    else
+    //    {
+    //      sprite()->setBounds(x_bound, y_bound);
+    //    }
+    switch (current_state)
     {
-      sprite()->setBounds(active_x_bound, active_y_bound);
-    }
-    else
-    {
-      sprite()->setBounds(x_bound, y_bound);
+      case NOT_READY:
+        sprite()->setBounds(not_ready_x, not_ready_y);
+        break;
+      case NOT_READY_INDENT:
+        sprite()->setBounds(not_ready_ind_x, not_ready_ind_y);
+        break;
+      case READY:
+        sprite()->setBounds(ready_x, ready_y);
+        break;
+      case READY_INDENT:
+        sprite()->setBounds(ready_ind_x, ready_ind_y);
+        break;
     }
     sprite_component->getSprite()->setGlobalZOrder(static_cast<int16_t>(z_order));
     sprite_component->render(renderer);
@@ -81,7 +106,7 @@ bool Buttons::clickCollision(ASGE::SharedEventData data)
   {
     return static_cast<bool>(
       sprite()
-        ->getBoundingBox(sprite()->getSprite()->scale(), false)
+        ->getBoundingBox(sprite()->getSprite()->scale())
         .collision(static_cast<float>(click->xpos), static_cast<float>(click->ypos), 0, 0));
   }
   return false;
